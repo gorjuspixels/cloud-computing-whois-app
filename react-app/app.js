@@ -48,7 +48,24 @@ class WhoISApp extends React.Component {
         <TextField floatingLabelText="Search website WHOIS information" fullWidth={ true } onEnterKeyDown={ this.query.bind(this) }/>
 
       	{ error && <div style={ errorStyle }>{ error }</div> }
-      	{ result &&  <div>{ result.split('\n').map((row, i) => <span key={ i }>{ row.split('\t').map((col, coli) => <span key={ coli } style={{ padding: coli === 0 ? 0 : 10 }}>{ col }</span> ) }<br/></span>) }</div> }
+      	{ result &&  <div> {
+          // Split each line break
+          result.split('\n').map((row, i) => (
+            <span key={ i }>
+              {
+
+                // Split each tab
+                row.split('\t').map((col, coli) => (
+                  <span key={ coli } style={{ padding: coli === 0 ? 0 : 10 }}>{ col }</span>
+                ))
+              }
+
+              <br/>
+            </span>
+          )
+        }
+        </div>
+      }
       </div>
     )
   }
