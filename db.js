@@ -1,4 +1,4 @@
-import mongoose from mongoose
+import mongoose from 'mongoose'
 mongoose.connect('mongodb://localhost/whois')
 
 const db = mongoose.connection
