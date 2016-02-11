@@ -80,6 +80,12 @@ class WhoISApp extends React.Component {
           <RaisedButton
             label="Save Record"
             onTouchTap={this.saveRecord}
+            style={{
+              position: 'absolute',
+              top: '50px',
+              left: '-150px'
+            }}
+            secondary={true}
           />
           </div> }
         </div>
