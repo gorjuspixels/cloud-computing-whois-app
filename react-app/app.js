@@ -62,10 +62,9 @@ class WhoISApp extends React.Component {
 
               <br/>
             </span>
-          )
+          ))
         }
-        </div>
-      }
+        </div> }
       </div>
     )
   }
