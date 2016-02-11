@@ -3,8 +3,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import fetch from 'isomorphic-fetch'
 import TextField from 'material-ui/lib/text-field'
-import Tabs from 'material-ui/lib/tabs/tabs'
-import Tab from 'material-ui/lib/tabs/tab'
+import LeftNav from 'material-ui/lib/left-nav'
+import MenuItem from 'material-ui/lib/menus/menu-item'
+import RaisedButton from 'material-ui/lib/raised-button'
 
 injectTapEventPlugin()
 
@@ -24,11 +25,8 @@ class WhoISApp extends React.Component {
     super(props)
     this.state = {
       result: undefined,
-      error: undefined,
-      tab: 'search'
+      error: undefined
     }
-
-    this.handleChange = this.handleChange.bind(this)
   }
 
   query(event) {
@@ -45,50 +43,47 @@ class WhoISApp extends React.Component {
     })
   }
 
-  handleChange(value) {
-    this.setState({
-      tab: value,
-    })
+  saveRecord() {
+
   }
 
   render() {
-    const { error, result, tab } = this.state
+    const { error, result } = this.state
 
     return(
-      <Tabs
-        value={tab}
-        onChange={this.handleChange}
-      >
-        <Tab label="Search" value="search" >
-          <div style={ style }>
-            <TextField floatingLabelText="Search website WHOIS information" fullWidth={ true } onEnterKeyDown={ this.query.bind(this) }/>
+      <div>
+        <LeftNav open={ true }>
+          <MenuItem>Search DNS and WHOIS</MenuItem>
+          <MenuItem>Browse stored records</MenuItem>
+        </LeftNav>
 
-            { error && <div style={ errorStyle }>{ error }</div> }
-            { result &&  <div> {
-              // Split each line break
-              result.split('\n').map((row, i) => (
-                <span key={ i }>
-                  {
+        <div style={ style }>
+          <TextField floatingLabelText="Search website WHOIS information" fullWidth={ true } onEnterKeyDown={ this.query.bind(this) }/>
 
-                    // Split each tab
-                    row.split('\t').map((col, coli) => (
-                      <span key={ coli } style={{ padding: coli === 0 ? 0 : 10 }}>{ col }</span>
-                    ))
-                  }
+        	{ error && <div style={ errorStyle }>{ error }</div> }
+        	{ result &&  <div> {
+            // Split each line break
+            result.split('\n').map((row, i) => (
+              <span key={ i }>
+                {
 
-                  <br/>
-                </span>
-              ))
-            }
-            </div> }
-          </div>
-        </Tab>
-        <Tab label="Browse" value="browse">
-          <div>
+                  // Split each tab
+                  row.split('\t').map((col, coli) => (
+                    <span key={ coli } style={{ padding: coli === 0 ? 0 : 10 }}>{ col }</span>
+                  ))
+                }
 
-          </div>
-        </Tab>
-      </Tabs>
+                <br/>
+              </span>
+            ))
+          }
+          <RaisedButton
+            label="Save Record"
+            onTouchTap={this.saveRecord}
+          />
+          </div> }
+        </div>
+      </div>
     )
   }
 }
