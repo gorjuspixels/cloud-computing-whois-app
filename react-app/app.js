@@ -12,7 +12,8 @@ injectTapEventPlugin()
 const style = {
   padding: "20px 10px",
   maxWidth: "600px",
-  margin: "0 auto"
+  margin: "0 auto",
+  position: 'relative'
 }
 
 const errorStyle = {
