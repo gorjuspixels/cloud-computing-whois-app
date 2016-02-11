@@ -32,6 +32,7 @@ class WhoISApp extends React.Component {
     }
 
     this.changeSection = this.changeSection.bind(this)
+    this.saveRecord = this.saveRecord.bind(this)
   }
 
   componentDidMount() {
