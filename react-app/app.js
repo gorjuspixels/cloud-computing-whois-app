@@ -30,7 +30,7 @@ class WhoISApp extends React.Component {
     let self = this
 
     // Make API call to see dig and whois data of the website
-    fetch(`http://${location.host}:666?website=${event.target.value}`)
+    fetch(`http://${location.host}:666/whois?website=${event.target.value}`)
   	.then(res => res.json())
   	.then( json => {
      self.setState({
