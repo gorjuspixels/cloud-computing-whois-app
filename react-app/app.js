@@ -3,6 +3,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import fetch from 'isomorphic-fetch'
 import TextField from 'material-ui/lib/text-field'
+import Tabs from 'material-ui/lib/tabs/tabs'
+import Tab from 'material-ui/lib/tabs/tab'
 
 injectTapEventPlugin()
 
@@ -22,8 +24,11 @@ class WhoISApp extends React.Component {
     super(props)
     this.state = {
       result: undefined,
-      error: undefined
+      error: undefined,
+      tab: 'search'
     }
+
+    this.handleChange = this.handleChange.bind(this)
   }
 
   query(event) {
@@ -40,32 +45,50 @@ class WhoISApp extends React.Component {
     })
   }
 
+  handleChange(value) {
+    this.setState({
+      tab: value,
+    })
+  }
+
   render() {
-    const { error, result } = this.state
+    const { error, result, tab } = this.state
 
     return(
-      <div style={ style }>
-        <TextField floatingLabelText="Search website WHOIS information" fullWidth={ true } onEnterKeyDown={ this.query.bind(this) }/>
+      <Tabs
+        value={tab}
+        onChange={this.handleChange}
+      >
+        <Tab label="Search" value="search" >
+          <div style={ style }>
+            <TextField floatingLabelText="Search website WHOIS information" fullWidth={ true } onEnterKeyDown={ this.query.bind(this) }/>
 
-      	{ error && <div style={ errorStyle }>{ error }</div> }
-      	{ result &&  <div> {
-          // Split each line break
-          result.split('\n').map((row, i) => (
-            <span key={ i }>
-              {
+            { error && <div style={ errorStyle }>{ error }</div> }
+            { result &&  <div> {
+              // Split each line break
+              result.split('\n').map((row, i) => (
+                <span key={ i }>
+                  {
 
-                // Split each tab
-                row.split('\t').map((col, coli) => (
-                  <span key={ coli } style={{ padding: coli === 0 ? 0 : 10 }}>{ col }</span>
-                ))
-              }
+                    // Split each tab
+                    row.split('\t').map((col, coli) => (
+                      <span key={ coli } style={{ padding: coli === 0 ? 0 : 10 }}>{ col }</span>
+                    ))
+                  }
 
-              <br/>
-            </span>
-          ))
-        }
-        </div> }
-      </div>
+                  <br/>
+                </span>
+              ))
+            }
+            </div> }
+          </div>
+        </Tab>
+        <Tab label="Browse" value="browse">
+          <div>
+
+          </div>
+        </Tab>
+      </Tabs>
     )
   }
 }
